@@ -3,128 +3,653 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Sender</title>
+    <title>Corporate Mail Pro | Enterprise Email Automation</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e4dd8;
+            --primary-light: #e0e7ff;
+            --secondary: #f8fafc;
+            --accent: #3b82f6;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --text-lighter: #94a3b8;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --danger: #ef4444;
+            --danger-light: #fee2e2;
+            --warning: #f59e0b;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+        }
+        
         body {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            height: 100vh;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f8fafc;
+            color: var(--text);
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        /* Enhanced Splash Screen */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a237e, #283593);
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 600px;
-        }
-        h2 {
-            color: #333;
-            text-align: center;
-        }
-        .btn-send {
-            background-color: #667eea;
+            z-index: 9999;
             color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            transition: 0.3s;
+            transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+        
+        .splash-content {
+            text-align: center;
+            padding: 2rem;
+            max-width: 500px;
+        }
+        
+        .splash-logo {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            animation: float 3s ease-in-out infinite, pulse 2s infinite;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .splash-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #fff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .splash-slogan {
+            font-size: 1.25rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.8);
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+        
+        .splash-progress {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+        
+        .splash-progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(to right, #4f46e5, #818cf8);
+            animation: progressLoad 2s ease-in-out;
+            box-shadow: 0 0 10px rgba(79, 70, 229, 0.5);
+        }
+        
+        /* Main Container */
+        .main-container {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: 2.5rem;
+            margin: 2rem auto;
             width: 100%;
+            max-width: 800px;
+            border: none;
+            animation: fadeIn 0.8s ease-out 0.3s both;
+            position: relative;
+            overflow: hidden;
         }
-        .btn-send:hover {
-            background-color: #5a67d8;
+        
+        .main-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
         }
+        
+        .tool-header {
+            color: var(--text);
+            margin-bottom: 2rem;
+            font-weight: 600;
+            font-size: 1.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+        
+        .tool-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
+        
+        .tool-header i {
+            color: var(--primary);
+        }
+        
+        /* Form Elements */
+        .form-label {
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .form-control, .form-select {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem 1rem;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+            outline: none;
+        }
+        
+        textarea.form-control {
+            min-height: 180px;
+            resize: vertical;
+        }
+        
+        /* Recipients Section */
+        .recipients-container {
+            margin-bottom: 1.5rem;
+        }
+        
+        .recipient-list {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 0.75rem;
+            margin-bottom: 0.75rem;
+            max-height: 200px;
+            overflow-y: auto;
+            background: var(--secondary);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
         .recipient-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #f8f9fa;
-            padding: 5px 10px;
-            border-radius: 5px;
-            margin-bottom: 5px;
+            background: white;
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius-sm);
+            margin-bottom: 0;
+            border: 1px solid var(--border-light);
+            transition: all 0.2s;
         }
-        .recipient-item button {
+        
+        .recipient-item:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .recipient-email {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+        
+        .remove-recipient {
+            background: none;
             border: none;
-            background: red;
-            color: white;
-            padding: 2px 5px;
-            border-radius: 5px;
+            color: var(--danger);
             cursor: pointer;
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .remove-recipient:hover {
+            background: var(--danger-light);
+        }
+        
+        /* Input Group */
+        .input-group {
+            box-shadow: var(--shadow-sm);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+        
+        .input-group .form-control {
+            box-shadow: none;
+            border-right: none;
+        }
+        
+        .input-group .btn {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+        
+        /* Sent Recipients Section */
+        .sent-recipients {
+            background-color: var(--success-light);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 0.5s ease-out;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .sent-recipients-title {
+            color: var(--success);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        /* Buttons */
+        .btn {
+            font-weight: 500;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 0.875rem 1.75rem;
+            font-weight: 500;
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.2);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+        }
+        
+        .btn-add {
+            background-color: var(--primary);
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .btn-add:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        /* Alerts */
+        .alert {
+            border-radius: var(--radius-md);
+            padding: 1rem 1.25rem;
+            border: none;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .alert-success {
+            background-color: var(--success-light);
+            color: var(--success);
+        }
+        
+        .alert-error {
+            background-color: var(--danger-light);
+            color: var(--danger);
+        }
+        
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes progressLoad {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 1.75rem;
+                margin: 1rem;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            
+            .tool-header {
+                font-size: 1.5rem;
+            }
+            
+            .splash-title {
+                font-size: 2rem;
+            }
+            
+            .splash-slogan {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Email Sender</h2>
+    <!-- Enhanced Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <i class="bi bi-envelope-paper-fill"></i>
+            </div>
+            <h1 class="splash-title">Corporate Mail Pro</h1>
+            <p class="splash-slogan">Enterprise-grade email automation for modern businesses</p>
+            <div class="splash-progress">
+                <div class="splash-progress-bar"></div>
+            </div>
+        </div>
+    </div>
 
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="alert mt-3">
-                    {% for message in messages %}
-                        <div class="alert alert-info">{{ message }}</div>
-                    {% endfor %}
+    <!-- Main Content -->
+    <div class="container py-4">
+        <div class="main-container">
+            <h2 class="tool-header">
+                <i class="bi bi-send-fill"></i>
+                Compose Email
+            </h2>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="mb-4">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ 'success' if category == 'success' else 'error' }} alert-dismissible fade show animate__animated animate__fadeIn">
+                                <i class="bi {{ 'bi-check-circle-fill' if category == 'success' else 'bi-exclamation-triangle-fill' }}"></i>
+                                <div class="flex-grow-1">{{ message }}</div>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <!-- Display sent recipients if available -->
+            {% if last_recipients %}
+            <div class="sent-recipients animate__animated animate__fadeIn">
+                <div class="sent-recipients-title">
+                    <i class="bi bi-check-circle-fill"></i>
+                    Email Sent To:
                 </div>
-            {% endif %}
-        {% endwith %}
-
-        <form action="/" method="POST">
-            <div class="mb-3">
-                <label for="subject" class="form-label">Subject</label>
-                <input type="text" class="form-control" id="subject" name="subject" value="{{ subject }}" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="body" class="form-label">Message</label>
-                <textarea class="form-control" id="body" name="body" rows="5" required>{{ body }}</textarea>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label">Recipients</label>
-                <div id="recipient-list">
-                    {% for email in recipients %}
-                        <div class="recipient-item">
-                            <input type="hidden" name="recipients" value="{{ email }}">
-                            <span>{{ email }}</span>
-                            <button type="button" onclick="removeRecipient(this)">X</button>
+                <div class="recipient-list">
+                    {% for email in last_recipients %}
+                        <div class="recipient-item animate__animated animate__fadeIn">
+                            <span class="recipient-email">{{ email }}</span>
+                            <span class="badge bg-success bg-opacity-10 text-success">Sent</span>
                         </div>
                     {% endfor %}
                 </div>
-                <input type="email" id="recipient-input" class="form-control mt-2" placeholder="Add recipient email">
-                <button type="button" class="btn btn-secondary mt-2" onclick="addRecipient()">Add Email</button>
             </div>
+            {% endif %}
 
-            <button type="submit" class="btn btn-send">Send Email</button>
-        </form>
+            <form action="/" method="POST" id="emailForm">
+                <div class="mb-4">
+                    <label for="subject" class="form-label">
+                        <i class="bi bi-chat-square-text"></i>
+                        Subject
+                    </label>
+                    <input type="text" class="form-control" id="subject" name="subject" value="{{ subject }}" required placeholder="Enter email subject">
+                </div>
+
+                <div class="mb-4">
+                    <label for="body" class="form-label">
+                        <i class="bi bi-body-text"></i>
+                        Message
+                    </label>
+                    <textarea class="form-control" id="body" name="body" rows="8" required placeholder="Type your message here">{{ body }}</textarea>
+                </div>
+
+                <div class="mb-4 recipients-container">
+                    <label class="form-label">
+                        <i class="bi bi-people-fill"></i>
+                        Recipients
+                    </label>
+                    <div class="recipient-list" id="recipientList">
+                        {% for email in recipients %}
+                            <div class="recipient-item animate__animated animate__fadeIn" data-email="{{ email }}">
+                                <input type="hidden" name="recipients" value="{{ email }}">
+                                <span class="recipient-email">{{ email }}</span>
+                                <button type="button" class="remove-recipient" onclick="removeRecipient(this)">
+                                    <i class="bi bi-trash"></i> Remove
+                                </button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="input-group mt-2">
+                        <input type="email" id="recipientInput" class="form-control" placeholder="name@company.com" aria-label="Recipient email">
+                        <button type="button" class="btn btn-primary" id="addRecipientBtn">
+                            <i class="bi bi-plus-lg"></i> Add
+                        </button>
+                    </div>
+                    <small class="text-muted">Press Enter or click Add to include recipients</small>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg py-3 animate__animated animate__fadeInUp">
+                        <i class="bi bi-send-fill me-2"></i> Send Email
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script>
+        // Enhanced splash screen with animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const splashScreen = document.getElementById('splashScreen');
+            
+            // Animate out after 2 seconds
+            setTimeout(() => {
+                splashScreen.style.opacity = '0';
+                splashScreen.style.transform = 'translateY(-20px)';
+                
+                setTimeout(() => {
+                    splashScreen.style.display = 'none';
+                    // Animate in the main content
+                    document.querySelector('.main-container').classList.add('animate__animated', 'animate__fadeIn');
+                }, 800);
+            }, 2000);
+        });
+
+        // Email validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Add recipient function with animation
         function addRecipient() {
-            const emailInput = document.getElementById("recipient-input");
+            const emailInput = document.getElementById('recipientInput');
             const email = emailInput.value.trim();
-            if (email) {
-                const recipientList = document.getElementById("recipient-list");
-
-                // Create recipient item
-                const div = document.createElement("div");
-                div.classList.add("recipient-item");
-                div.innerHTML = `
-                    <input type="hidden" name="recipients" value="${email}">
-                    <span>${email}</span>
-                    <button type="button" onclick="removeRecipient(this)">X</button>
+            
+            if (!email) return;
+            
+            if (!validateEmail(email)) {
+                // Create and show error tooltip
+                const errorTooltip = document.createElement('div');
+                errorTooltip.className = 'alert alert-error animate__animated animate__fadeIn';
+                errorTooltip.innerHTML = `
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    Please enter a valid email address
                 `;
-
-                recipientList.appendChild(div);
-                emailInput.value = ""; // Clear input
+                
+                const container = document.querySelector('.recipients-container');
+                container.insertBefore(errorTooltip, container.firstChild);
+                
+                setTimeout(() => {
+                    errorTooltip.classList.add('animate__fadeOut');
+                    setTimeout(() => errorTooltip.remove(), 300);
+                }, 3000);
+                
+                emailInput.focus();
+                return;
             }
+            
+            // Check for duplicates
+            const existingEmails = document.querySelectorAll('#recipientList .recipient-item');
+            for (const item of existingEmails) {
+                if (item.dataset.email === email) {
+                    const errorTooltip = document.createElement('div');
+                    errorTooltip.className = 'alert alert-error animate__animated animate__fadeIn';
+                    errorTooltip.innerHTML = `
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                        This email is already in the recipient list
+                    `;
+                    
+                    const container = document.querySelector('.recipients-container');
+                    container.insertBefore(errorTooltip, container.firstChild);
+                    
+                    setTimeout(() => {
+                        errorTooltip.classList.add('animate__fadeOut');
+                        setTimeout(() => errorTooltip.remove(), 300);
+                    }, 3000);
+                    
+                    emailInput.value = '';
+                    emailInput.focus();
+                    return;
+                }
+            }
+            
+            // Create new recipient item with animation
+            const recipientList = document.getElementById('recipientList');
+            const newItem = document.createElement('div');
+            newItem.className = 'recipient-item animate__animated animate__fadeIn';
+            newItem.dataset.email = email;
+            newItem.innerHTML = `
+                <input type="hidden" name="recipients" value="${email}">
+                <span class="recipient-email">${email}</span>
+                <button type="button" class="remove-recipient" onclick="removeRecipient(this)">
+                    <i class="bi bi-trash"></i> Remove
+                </button>
+            `;
+            
+            recipientList.appendChild(newItem);
+            emailInput.value = '';
+            emailInput.focus();
         }
 
+        // Remove recipient function with animation
         function removeRecipient(button) {
-            button.parentElement.remove();
+            const item = button.closest('.recipient-item');
+            item.classList.add('animate__fadeOut');
+            setTimeout(() => {
+                item.remove();
+            }, 300);
         }
+
+        // Event listeners
+        document.getElementById('addRecipientBtn').addEventListener('click', addRecipient);
+        
+        document.getElementById('recipientInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addRecipient();
+            }
+        });
+
+        // Form submission animation
+        document.getElementById('emailForm').addEventListener('submit', (e) => {
+            const submitBtn = document.querySelector('#emailForm button[type="submit"]');
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Sending...';
+            submitBtn.disabled = true;
+        });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
